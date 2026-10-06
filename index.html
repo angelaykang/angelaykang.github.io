@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Angela Kang.exe — DS Portfolio</title>
+  <title>Angela Kang.exe — Data Science / Machine Learning and AI</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -71,32 +71,6 @@
     .hpbar-fill { height: 100%; width: 92%; background: var(--green); }
     .hud-mid { color: var(--pink); letter-spacing: .12em; }
     .hud-xp  { color: var(--yellow); }
-    .hud-docs { position: relative; }
-    .hud-docs summary {
-      color: var(--bg); background: var(--pink);
-      padding: 3px 9px; border: none; cursor: pointer;
-      font-family: 'Press Start 2P', monospace; font-size: 6px;
-      letter-spacing: .05em; white-space: nowrap;
-      list-style: none;
-    }
-    .hud-docs summary::-webkit-details-marker { display: none; }
-    .hud-docs summary:hover,
-    .hud-docs[open] summary { background: var(--pink2); }
-    .hud-docs-menu {
-      position: absolute; top: calc(100% + 8px); right: 0;
-      background: var(--bg2); border: 3px solid var(--pink);
-      box-shadow: 4px 4px 0 #000;
-      display: flex; flex-direction: column; min-width: 148px;
-      z-index: 1001;
-    }
-    .hud-docs-menu a {
-      color: var(--pink2); text-decoration: none;
-      font-family: 'Press Start 2P', monospace; font-size: 6px;
-      padding: 10px 12px; white-space: nowrap;
-      border-bottom: 2px solid var(--bg3);
-    }
-    .hud-docs-menu a:last-child { border-bottom: none; }
-    .hud-docs-menu a:hover { background: var(--pink); color: #000; }
 
     /* ── SECTIONS ── */
     section, .ticker-wrap { position: relative; z-index: 1; }
@@ -142,7 +116,8 @@
     }
     .hero-sub {
       font-size: 8px; color: var(--pur2);
-      letter-spacing: .18em; margin-bottom: 44px;
+      letter-spacing: .12em; margin-bottom: 44px;
+      line-height: 2.2; max-width: 720px; padding: 0 18px;
     }
 
     .start-btn {
@@ -257,7 +232,7 @@
       font-size: 6px; color: var(--pur2); text-align: center;
     }
     .p-name { font-size: 11px; color: var(--yellow); text-shadow: 2px 2px 0 #78350f; margin-bottom: 8px; }
-    .p-class { font-size: 7px; color: var(--green); margin-bottom: 18px; }
+    .p-class { font-size: 6px; color: var(--green); margin-bottom: 18px; line-height: 1.85; }
     .stat-row {
       display: flex; justify-content: space-between;
       font-size: 7px; padding: 7px 0;
@@ -408,7 +383,7 @@
     }
     .c-title { font-size: 20px; color: var(--pink); text-shadow: 3px 3px 0 #7a0040; margin-bottom: 16px; }
     .c-desc { font-family:'VT323',monospace; font-size:20px; color:var(--pur2); line-height:1.5; margin-bottom:34px; }
-    .c-btns { display:flex; flex-direction:column; gap:11px; max-width:300px; margin:0 auto; }
+    .c-btns { display:flex; flex-direction:column; gap:11px; max-width:360px; margin:0 auto; }
     .clink {
       font-family:'Press Start 2P',monospace; font-size:8px;
       padding:12px 20px; text-decoration:none;
@@ -510,14 +485,6 @@
   </div>
   <div class="hud-mid">ANGELA.EXE</div>
   <div class="hud-xp">XP: DATA SCIENCE LVL 05</div>
-  <details class="hud-docs">
-    <summary>DOCS</summary>
-    <div class="hud-docs-menu">
-      <a href="./Angela_Kang_DS_Resume.pdf" target="_blank" rel="noopener">DS RESUME</a>
-      <a href="./Angela_Kang_AI_Resume.pdf" target="_blank" rel="noopener">AI RESUME</a>
-      <a href="./Angela_Kang_Transcript.pdf" target="_blank" rel="noopener">TRANSCRIPT</a>
-    </div>
-  </details>
 </div>
 
 <!-- ═══ HERO ═══ -->
@@ -539,7 +506,7 @@
 
   <p class="hero-yr">★ ─── 2026 ─── ★</p>
   <h1 class="hero-title">PORTFOLIO</h1>
-  <p class="hero-sub">DATA SCIENTIST &nbsp;·&nbsp; ML ENGINEER</p>
+  <p class="hero-sub">DATA SCIENCE / MACHINE LEARNING<br>AND AI ENGINEER</p>
   <a href="#about" class="start-btn">► PRESS START</a>
 
   <div class="ground"></div>
@@ -566,11 +533,11 @@
       <div class="player-card">
         <div class="sprite-box">👩‍💻</div>
         <div class="p-name">ANGELA KANG</div>
-        <div class="p-class">DATA SCIENTIST · ML ENGINEER</div>
+        <div class="p-class">DATA SCIENCE / MACHINE LEARNING<br>AND AI ENGINEER</div>
         <div class="stat-row"><span>SCHOOL</span><span class="sv">USC + UCSB</span></div>
-        <div class="stat-row"><span>DEGREE</span><span class="sv">MS + BS DATA SCI</span></div>
+        <div class="stat-row"><span>DEGREE</span><span class="sv">MS ADS · BS STAT &amp; DS</span></div>
         <div class="stat-row"><span>LOCATION</span><span class="sv">LOS ANGELES, CA</span></div>
-        <div class="stat-row"><span>SPEC</span><span class="sv">ML · GPU · NLP</span></div>
+        <div class="stat-row"><span>SPEC</span><span class="sv">DS · ML · AI</span></div>
         <div class="stat-row"><span>STATUS</span><span class="sv-gold" style="color:var(--yellow);">★ OPEN TO ROLES ★</span></div>
         <div class="stat-row"><span>HACKATHON</span><span class="sv-gold" style="color:var(--yellow);">★ WINNER ★</span></div>
       </div>
@@ -581,9 +548,9 @@
           <span class="dialog-lbl">HELLO !!</span>
           <div class="vt" style="margin-top:8px;">
             <p>Player: <span style="color:var(--pink2);">Angela Kang</span></p>
-            <p style="margin-top:6px;">Role: <span style="color:var(--pink2);">Data Scientist &amp; ML Engineer</span></p>
-            <p style="margin-top:6px;">Mission: <span style="color:var(--pink2);">Build impactful ML systems — from CUDA kernels to deployed inference APIs.</span></p>
-            <p style="margin-top:6px;">Status: <span style="color:var(--green);">Available · Ready for full-time DS &amp; ML Engineering roles.</span></p>
+            <p style="margin-top:6px;">Role: <span style="color:var(--pink2);">Data Science / Machine Learning and AI Engineer</span></p>
+            <p style="margin-top:6px;">Mission: <span style="color:var(--pink2);">Build data science, machine learning, and AI systems — from statistical models to deployed LLM apps.</span></p>
+            <p style="margin-top:6px;">Status: <span style="color:var(--green);">Available · Open to Data Science, Machine Learning, and AI Engineering roles.</span></p>
             <p style="margin-top:12px;color:var(--yellow);">Let's start the game! ▼</p>
           </div>
         </div>
@@ -593,6 +560,7 @@
           <div style="margin-top:12px;">
             <span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">NumPy</span>
             <span class="chip">TensorFlow</span><span class="chip">Scikit-learn</span><span class="chip">XGBoost</span>
+            <span class="chip">FastAPI</span><span class="chip">React</span><span class="chip">LangChain</span>
             <span class="chip">CUDA</span><span class="chip">SQL</span><span class="chip">Streamlit</span>
             <span class="chip">Spark</span><span class="chip">BeautifulSoup</span><span class="chip">Tesseract OCR</span>
           </div>
@@ -601,9 +569,9 @@
         <div class="mini-box" style="border-color:var(--yellow);">
           <span class="mini-lbl" style="background:var(--yellow);color:#000;">CURRENT MISSION</span>
           <div class="vt" style="margin-top:12px;line-height:1.5;">
-            <p style="color:var(--yellow);">▶ Seeking entry-level DS &amp; ML roles</p>
+            <p style="color:var(--yellow);">▶ Seeking Data Science, Machine Learning, and AI Engineering roles</p>
             <p style="color:var(--dim);">&nbsp;&nbsp;On-site · Remote · Open to relocation</p>
-            <p style="color:var(--yellow);margin-top:7px;">▶ Strengths: ML · GPU · NLP · CV</p>
+            <p style="color:var(--yellow);margin-top:7px;">▶ Strengths: ML · LLMs · GPU · NLP · CV</p>
           </div>
         </div>
       </div>
@@ -708,23 +676,19 @@
         <div class="qbody">
           <div class="qname gold">SCOUT — AI FREELANCER-CLIENT COMMUNICATION PLATFORM</div>
           <div class="qdesc">
-            Engineered AI Scope Guardian — a RAG-based system that detects contract violations
-            in real time and auto-generates change orders and invoices (ScopeFlagCard,
-            ChangeOrderPreview). Built embeddings-based freelancer-client matching scoring
-            candidates across skill fit, communication style, timeline, and budget alignment.
-            Served as Product Lead delivering React + Vite web + React Native Android app
-            with real-time WebSocket chat UI and conversational onboarding flows.
+            Product lead on a 3-person team. Freelancers lose money when clients add extra
+            work in chat, so the platform flags those requests in real time. Built the React
+            (Vite) web app and React Native Android app: WebSocket chat, project dashboard,
+            and conversational onboarding, plus the UX for the main screens. Built the Scope
+            Guardian alert and change-order UI on the team's RAG pipeline, which pulls the
+            3 most relevant contract clauses and asks GPT-4o-mini whether a request is out of scope.
           </div>
           <div class="qtags">
             <span class="qtag">React + Vite</span><span class="qtag">React Native</span>
-            <span class="qtag">FastAPI</span><span class="qtag">Python</span>
-            <span class="qtag">WebSocket</span><span class="qtag">RAG</span>
-            <span class="qtag">Embeddings</span><span class="qtag">LLM</span>
+            <span class="qtag">FastAPI</span><span class="qtag">WebSocket</span>
+            <span class="qtag">ChromaDB</span><span class="qtag">GPT-4o-mini</span>
           </div>
-          <div class="qreward gold">⚔ Product Lead · UX design through deployment · cross-platform (web + Android)</div>
-          <div style="margin-top:10px;">
-            <a href="https://github.com/angelaykang" target="_blank" class="pbtn pk">GITHUB ↗</a>
-          </div>
+          <div class="qreward gold">⚔ Product lead · UX through the web and Android apps · Scope Guardian UI on the team's RAG pipeline</div>
         </div>
       </div>
 
@@ -737,15 +701,15 @@
         <div class="qbody">
           <div class="qname" style="color:var(--cyan);">AI GROUP CHAT — LLM-POWERED REAL-TIME MESSAGING</div>
           <div class="qdesc">
-            Full-stack AI group chat with FastAPI + MySQL backend and real-time WebSocket
-            messaging. Integrated Llama/OpenAI-compatible LLM to generate in-chat replies
-            alongside human messages. Static web frontend paired with an Android Trusted Web
-            Activity (TWA) wrapper — one codebase, two platforms.
+            Real-time group chat where an LLM assistant joins the room and answers questions
+            for everyone, with JWT login and messages stored in MySQL. The bot talks to any
+            OpenAI-compatible endpoint, so it can run on a local Llama 3 8B (llama.cpp or vLLM)
+            or a hosted API by changing config. Packaged as an Android Trusted Web Activity.
           </div>
           <div class="qtags">
             <span class="qtag c">FastAPI</span><span class="qtag c">MySQL</span>
-            <span class="qtag c">WebSocket</span><span class="qtag c">Llama / OpenAI API</span>
-            <span class="qtag c">Python</span><span class="qtag c">Android TWA</span>
+            <span class="qtag c">JWT</span><span class="qtag c">WebSocket</span>
+            <span class="qtag c">Llama 3</span><span class="qtag c">Android TWA</span>
           </div>
           <div class="qreward cyan">⚡ Open-source LLM integration · multi-room · web + Android deployment</div>
           <div style="margin-top:10px;">
@@ -763,16 +727,17 @@
         <div class="qbody">
           <div class="qname">PDF CHAT — RAG DOCUMENT Q&amp;A</div>
           <div class="qdesc">
-            Chat with your PDFs using retrieval-augmented generation. Extracts text, creates
-            vector embeddings, and uses LLMs to answer questions from your documents.
-            Supports both OpenAI and open-source model backends.
+            Core app for a 3-person team: a chatbot that answers questions about long technical
+            manuals. Extracts PDF text, splits it into overlapping chunks, and indexes embeddings
+            in FAISS. Two swappable backends — OpenAI, or fully offline with sentence-transformers
+            and 4-bit Qwen 2.5 3B — plus chat memory for follow-up questions.
           </div>
           <div class="qtags">
-            <span class="qtag">Python</span><span class="qtag">RAG</span>
-            <span class="qtag">Vector Embeddings</span><span class="qtag">LLM</span>
-            <span class="qtag">OpenAI API</span>
+            <span class="qtag">LangChain</span><span class="qtag">FAISS</span>
+            <span class="qtag">sentence-transformers</span><span class="qtag">llama.cpp</span>
+            <span class="qtag">OpenAI</span>
           </div>
-          <div class="qreward" style="border-color:var(--pur2);color:var(--pur2);background:rgba(192,132,252,.08);">📄 Swap models without changing the pipeline · works with local open-source LLMs</div>
+          <div class="qreward" style="border-color:var(--pur2);color:var(--pur2);background:rgba(192,132,252,.08);">📄 Same pipeline, two backends · chat memory keeps follow-up questions in context</div>
           <div style="margin-top:10px;">
             <a href="https://github.com/angelaykang/pdf-chat" target="_blank" class="pbtn pk">GITHUB ↗</a>
           </div>
@@ -788,9 +753,10 @@
         <div class="qbody">
           <div class="qname">REDDIT NLP PIPELINE &amp; EMBEDDINGS</div>
           <div class="qdesc">
-            End-to-end Reddit pipeline: scrape posts, preprocess, store in MySQL, then evaluate
-            Doc2Vec and Word2Vec-assisted bag-of-words representations via cosine-distance
-            clustering. Automated on Linux/Ubuntu with visualization output.
+            With a 3-person team, built a pipeline that collects posts from 4 tech-career
+            subreddits, cleans the text, stores it in MySQL, and refreshes on a schedule.
+            Compared Doc2Vec (3 vector sizes) with Word2Vec bag-of-bins vectors on about
+            5,000 posts using KMeans. Word2Vec bins clustered best (silhouette 0.31 vs. 0.13).
           </div>
           <div class="qtags">
             <span class="qtag">Python</span><span class="qtag">Doc2Vec</span>
@@ -815,17 +781,17 @@
         <div class="qbody">
           <div class="qname">APS FAILURE PREDICTION</div>
           <div class="qdesc">
-            Predictive maintenance model for truck Air Pressure System failures on 60,000 training
-            examples across 170 anonymized sensor features (1.67% failure rate). Applied SMOTE
-            for class balancing, trained Random Forest and XGBoost, minimizing false negatives
-            — the high-cost error in failure detection.
+            Predicted truck air-pressure-system failures from 170 sensors. Only 1.67% of
+            60,000 records were failures, and a missed failure costs 50× a false alarm, so
+            accuracy alone was misleading. Compared Random Forest and XGBoost with class
+            weights and SMOTE, keeping oversampling and imputation inside the training folds.
           </div>
           <div class="qtags">
             <span class="qtag">Python</span><span class="qtag">XGBoost</span>
             <span class="qtag">scikit-learn</span><span class="qtag">SMOTE</span>
             <span class="qtag">Random Forest</span>
           </div>
-          <div class="qreward gold">⭐ 99.31% ACCURACY · AUC 0.9946 · only 66 false negatives vs 98–160 from baseline models</div>
+          <div class="qreward gold">⭐ XGBoost + SMOTE cut missed failures 38% (106 → 66), raised recall to 82%, and lowered the cost metric by 37%</div>
           <div style="margin-top:10px;">
             <a href="https://github.com/angelaykang/aps-failure-prediction" target="_blank" class="pbtn pk">GITHUB ↗</a>
           </div>
@@ -841,16 +807,17 @@
         <div class="qbody">
           <div class="qname">JUTE PEST CLASSIFICATION</div>
           <div class="qdesc">
-            Deep learning image classifier for 17 jute pest classes using transfer learning
-            on pre-trained CNNs. Benchmarked ResNet50, EfficientNet, VGG16, and DenseNet201
-            with data augmentation. DenseNet201 achieved 96.6% accuracy and AUC 0.999.
+            Image classifier for 17 jute pest species from about 6,800 images. Benchmarked
+            five ImageNet-pretrained CNNs — ResNet50, ResNet101, EfficientNetB0, VGG16, and
+            DenseNet201 — with the same head, data augmentation, early stopping, and
+            mixed-precision GPU training.
           </div>
           <div class="qtags">
             <span class="qtag">Python</span><span class="qtag">TensorFlow</span>
             <span class="qtag">DenseNet201</span><span class="qtag">Transfer Learning</span>
             <span class="qtag">ImageNet</span>
           </div>
-          <div class="qreward gold">⭐ DenseNet201 outperformed ResNet50, EfficientNet &amp; VGG16 — best architecture selected via systematic benchmark</div>
+          <div class="qreward gold">⭐ DenseNet201 reached 96.6% test accuracy and F1 0.97, versus 83.1% for the next best</div>
           <div style="margin-top:10px;">
             <a href="https://github.com/angelaykang/jute-pest-classification" target="_blank" class="pbtn pk">GITHUB ↗</a>
           </div>
@@ -866,17 +833,17 @@
         <div class="qbody">
           <div class="qname">CUDA MATRIX CONVOLUTION</div>
           <div class="qdesc">
-            CPU and GPU implementations of matrix multiplication and image convolution using CUDA.
-            Optimised memory access patterns and parallel execution for significant GPU speedups.
-            Benchmarked naive → tiled → cuBLAS at 512/1024/2048. Integrated Python bindings
-            via shared library (.dll/.so) for use in DS workflows.
+            Wrote matrix multiply four ways — CPU, naive CUDA, shared-memory tiled CUDA, and
+            cuBLAS — plus 2D image convolution on an RTX 3060. The tiled kernel finished a
+            2048×2048 multiply in 19.5 ms versus 58 s on one CPU thread (cuBLAS: 2.3 ms).
+            Kernels compile to a shared library callable from Python with NumPy arrays.
           </div>
           <div class="qtags">
             <span class="qtag g">CUDA</span><span class="qtag g">C</span>
             <span class="qtag g">cuBLAS</span><span class="qtag g">Python Bindings</span>
             <span class="qtag g">NVCC</span>
           </div>
-          <div class="qreward" style="border-color:var(--green);color:var(--green);background:rgba(74,222,128,.08);">⚡ Measurable GPU speedups at every size · drop-in usable from Python without rewriting DS code</div>
+          <div class="qreward" style="border-color:var(--green);color:var(--green);background:rgba(74,222,128,.08);">⚡ 2048×2048 multiply: 19.5 ms tiled CUDA vs. 58 s on one CPU thread · callable from Python</div>
           <div style="margin-top:10px;">
             <a href="https://github.com/angelaykang/cuda-matrix-convolution" target="_blank" class="pbtn pk">GITHUB ↗</a>
           </div>
@@ -892,10 +859,9 @@
         <div class="qbody">
           <div class="qname">DATA COLLECTION PIPELINE FOR CAREER CHATBOT</div>
           <div class="qdesc">
-            Multi-source data collection system for a domain-specific career chatbot.
-            Integrated Greenhouse API to collect job salary data, scraped job listings
-            via RemoteOK (BeautifulSoup), and built a PDF/OCR resume parser using
-            pdfplumber + pytesseract. All data merged into a unified dataset for downstream NLP.
+            Team lab for a career chatbot. Pulled company pay ranges from the Greenhouse
+            Job Board API, collected RemoteOK job listings, and parsed PDF resumes with
+            pdfplumber, falling back to pytesseract OCR for scans.
           </div>
           <div class="qtags">
             <span class="qtag">Python</span><span class="qtag">BeautifulSoup</span>
@@ -903,7 +869,7 @@
             <span class="qtag">pdfplumber</span><span class="qtag">OCR</span>
             <span class="qtag">pandas</span>
           </div>
-          <div class="qreward">🔗 3 heterogeneous sources unified into one dataset ready for NLP training</div>
+          <div class="qreward">🔗 Three sources for one chatbot: pay data, job listings, and parsed resumes</div>
           <div style="margin-top:10px;">
             <a href="https://github.com/angelaykang/pylovers_lab2" target="_blank" class="pbtn pk">GITHUB ↗</a>
           </div>
@@ -919,10 +885,10 @@
         <div class="qbody">
           <div class="qname">COVID CUSTOM SQL ENGINE</div>
           <div class="qdesc">
-            Designed and implemented core relational DB operations (filter, select, groupby, join) from
-            scratch using hash-based algorithms — no pandas, no SQL engines. Built a DataFrame-like
-            abstraction to process large COVID-19 CSV datasets efficiently. Developed an interactive
-            Streamlit dashboard to visualise time-series trends and support EDA.
+            Built core database operations from scratch — CSV parser, filter, projection,
+            group-by, and hash join — on a custom column store, with no pandas and no SQL
+            engine. Ran it on a 350,000-row COVID dataset joined with country data, and
+            deployed a Streamlit dashboard of cases, deaths, and vaccination trends.
           </div>
           <div class="qtags">
             <span class="qtag c">Python</span><span class="qtag c">Streamlit</span>
@@ -972,7 +938,7 @@
 
       <div class="sqcard">
         <div class="sq-name">BREAST CANCER — LEARNING METHODS</div>
-        <div class="sq-desc">Comparison of supervised, semi-supervised, unsupervised, and active learning methods on breast cancer and banknote authentication datasets.</div>
+        <div class="sq-desc">Compared L1-SVM, semi-supervised self-training, k-means, and spectral clustering on 569 tumors. Self-training with half the labels reached 96.2% test accuracy versus 96.7% fully supervised. On banknote data, labeling points nearest the SVM margin beat random sampling.</div>
         <div class="sq-tags"><span class="sq-tag">Python</span><span class="sq-tag">Semi-supervised</span><span class="sq-tag">Active Learning</span><span class="sq-tag">Clustering</span></div>
         <a href="https://github.com/angelaykang/breast-cancer-learning-methods" target="_blank" class="sq-link">GITHUB ↗</a>
       </div>
@@ -986,7 +952,7 @@
 
       <div class="sqcard">
         <div class="sq-name">VERTEBRAL COLUMN CLASSIFICATION</div>
-        <div class="sq-desc">KNN from scratch for binary classification of spinal abnormalities. Compares Euclidean, Manhattan, Chebyshev, and Minkowski distance metrics.</div>
+        <div class="sq-desc">KNN from scratch for binary classification of spinal abnormalities. Compares Euclidean, Manhattan, Chebyshev, and Mahalanobis distance metrics.</div>
         <div class="sq-tags"><span class="sq-tag">Python</span><span class="sq-tag">KNN from scratch</span><span class="sq-tag">Distance Metrics</span></div>
         <a href="https://github.com/angelaykang/vertebral-column-classification" target="_blank" class="sq-link">GITHUB ↗</a>
       </div>
@@ -1000,7 +966,7 @@
 
       <div class="sqcard">
         <div class="sq-name">PAPER AIRPLANE EXPERIMENT — RCBD</div>
-        <div class="sq-desc">Randomized Complete Block Design experiment on paperclip placement and flight distance. ANOVA + Tukey HSD post-hoc analysis in R.</div>
+        <div class="sq-desc">Randomized complete block experiment, 30 airplanes by 4 paperclip placements. ANOVA showed placement mattered (F = 31.8). A middle clip flew 27.8 in. farther than the control.</div>
         <div class="sq-tags"><span class="sq-tag">R</span><span class="sq-tag">ANOVA</span><span class="sq-tag">Tukey HSD</span><span class="sq-tag">RCBD</span><span class="sq-tag">DOE</span></div>
         <a href="https://github.com/angelaykang/paper-airplane-experiment-rcbd" target="_blank" class="sq-link">GITHUB ↗</a>
       </div>
@@ -1031,11 +997,13 @@
       <div class="train-card">
         <span class="train-badge" style="background:var(--green);color:#000;">CURRENT</span>
         <div class="train-school">UNIVERSITY OF SOUTHERN CALIFORNIA</div>
-        <div class="train-deg">MS · Applied Data Science</div>
+        <div class="train-deg">MS · Applied Data Science · GPA 4.0</div>
         <div class="train-date">Aug 2025 – May 2027 (expected) · Los Angeles, CA</div>
         <div>
           <span class="ctag">ML for Data Science</span>
           <span class="ctag">Foundations of Data Management</span>
+          <span class="ctag">Database Systems</span>
+          <span class="ctag">Data Science Practicum</span>
         </div>
       </div>
 
@@ -1118,7 +1086,7 @@
 
 <!-- ticker 5 -->
 <div class="ticker-wrap pink" style="position:relative;z-index:1;">
-  <span class="ticker-inner" style="animation-delay:-3s;">OPEN TO DS & ML ROLES ★ LOS ANGELES · OPEN TO RELOCATION ★ LET'S BUILD SOMETHING ★ AVAILABLE NOW ★ OPEN TO DS & ML ROLES ★ LOS ANGELES · OPEN TO RELOCATION ★ LET'S BUILD SOMETHING ★&nbsp;&nbsp;</span>
+  <span class="ticker-inner" style="animation-delay:-3s;">OPEN TO DATA SCIENCE, MACHINE LEARNING &amp; AI ROLES ★ LOS ANGELES · OPEN TO RELOCATION ★ LET'S BUILD SOMETHING ★ AVAILABLE NOW ★ OPEN TO DATA SCIENCE, MACHINE LEARNING &amp; AI ROLES ★ LOS ANGELES · OPEN TO RELOCATION ★ LET'S BUILD SOMETHING ★&nbsp;&nbsp;</span>
 </div>
 
 <!-- ═══ LEVEL 06 — CONTACT ═══ -->
@@ -1134,10 +1102,10 @@
 
     <div class="cbox reveal">
       <div class="c-title">LET'S CONNECT</div>
-      <div class="c-desc">Open to Data Science &amp; ML Engineering roles.<br>Let's build something that actually matters.</div>
+      <div class="c-desc">Open to Data Science, Machine Learning, and AI Engineering roles.<br>Let's build something that actually matters.</div>
       <div class="c-btns">
-        <a href="./Angela_Kang_DS_Resume.pdf" target="_blank" rel="noopener" class="clink email">⬇ &nbsp;DS RESUME</a>
-        <a href="./Angela_Kang_AI_Resume.pdf" target="_blank" rel="noopener" class="clink ai">⬇ &nbsp;AI RESUME</a>
+        <a href="./Angela_Kang_DS_Resume.pdf" target="_blank" rel="noopener" class="clink email">⬇ &nbsp;DATA SCIENCE RESUME</a>
+        <a href="./Angela_Kang_AI_Resume.pdf" target="_blank" rel="noopener" class="clink ai">⬇ &nbsp;AI ENGINEER RESUME</a>
         <a href="./Angela_Kang_Transcript.pdf" target="_blank" rel="noopener" class="clink tr">⬇ &nbsp;TRANSCRIPT</a>
         <a href="mailto:angelakang02@gmail.com" class="clink email">✉ &nbsp;EMAIL</a>
         <a href="https://github.com/angelaykang" target="_blank" class="clink gh">⌘ &nbsp;GITHUB</a>
@@ -1154,7 +1122,7 @@
 
 <!-- ═══ FOOTER ═══ -->
 <footer style="position:relative;z-index:1;">
-  <p style="color:var(--pink);margin-bottom:7px;">ANGELA KANG · DATA SCIENTIST</p>
+  <p style="color:var(--pink);margin-bottom:7px;">ANGELA KANG · DATA SCIENCE / MACHINE LEARNING &amp; AI ENGINEER</p>
   <p>© 2026 &nbsp;·&nbsp; BUILT WITH ♥ + LOTS OF PYTHON</p>
   <p style="margin-top:7px;color:var(--pur2);">github.com/angelaykang</p>
 </footer>
