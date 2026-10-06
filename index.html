@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Angela Kang.exe — DS Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:    #07000f;
+      --bg2:   #0f0020;
+      --bg3:   #1a003a;
+      --pink:  #ff6eb4;
+      --pink2: #ffadd8;
+      --purple:#a855f7;
+      --pur2:  #c084fc;
+      --green: #4ade80;
+      --yellow:#fbbf24;
+      --cyan:  #22d3ee;
+      --white: #fef0ff;
+      --dim:   #6b5080;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      line-height: 1.9;
+      overflow-x: hidden;
+    }
+
+    /* scanlines */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── STAR CANVAS ── */
+    #stars {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HUD ── */
+    .hud {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(7,0,15,0.96);
+      border-bottom: 3px solid var(--pink);
+      padding: 8px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 7px;
+    }
+    .hud-hp { display: flex; align-items: center; gap: 8px; color: var(--pink); }
+    .hpbar {
+      display: inline-block; width: 90px; height: 10px;
+      background: var(--bg3); border: 2px solid var(--white);
+      vertical-align: middle;
+    }
+    .hpbar-fill { height: 100%; width: 92%; background: var(--green); }
+    .hud-mid { color: var(--pink); letter-spacing: .12em; }
+    .hud-xp  { color: var(--yellow); }
+    .hud-docs { position: relative; }
+    .hud-docs summary {
+      color: var(--bg); background: var(--pink);
+      padding: 3px 9px; border: none; cursor: pointer;
+      font-family: 'Press Start 2P', monospace; font-size: 6px;
+      letter-spacing: .05em; white-space: nowrap;
+      list-style: none;
+    }
+    .hud-docs summary::-webkit-details-marker { display: none; }
+    .hud-docs summary:hover,
+    .hud-docs[open] summary { background: var(--pink2); }
+    .hud-docs-menu {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      background: var(--bg2); border: 3px solid var(--pink);
+      box-shadow: 4px 4px 0 #000;
+      display: flex; flex-direction: column; min-width: 148px;
+      z-index: 1001;
+    }
+    .hud-docs-menu a {
+      color: var(--pink2); text-decoration: none;
+      font-family: 'Press Start 2P', monospace; font-size: 6px;
+      padding: 10px 12px; white-space: nowrap;
+      border-bottom: 2px solid var(--bg3);
+    }
+    .hud-docs-menu a:last-child { border-bottom: none; }
+    .hud-docs-menu a:hover { background: var(--pink); color: #000; }
+
+    /* ── SECTIONS ── */
+    section, .ticker-wrap { position: relative; z-index: 1; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      text-align: center;
+      padding-top: 44px;
+      overflow: hidden;
+    }
+
+    .hero-deco { position: absolute; pointer-events: none; }
+
+    .cloud {
+      position: absolute;
+      color: var(--purple);
+      animation: cfloat 7s ease-in-out infinite;
+      font-size: 22px;
+      opacity: .65;
+    }
+    @keyframes cfloat { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-14px) } }
+
+    .star-deco {
+      position: absolute;
+      animation: sfloat 4s ease-in-out infinite;
+    }
+    @keyframes sfloat { 0%,100%{ transform:translateY(0) rotate(0) } 50%{ transform:translateY(-12px) rotate(15deg) } }
+
+    .hero-yr {
+      font-size: 9px; color: var(--yellow);
+      letter-spacing: .35em; margin-bottom: 18px;
+      text-shadow: 0 0 12px var(--yellow);
+    }
+    .hero-title {
+      font-size: clamp(30px, 7vw, 60px);
+      color: var(--pink);
+      text-shadow: 4px 4px 0 #7a0040, 0 0 30px rgba(255,110,180,.4);
+      letter-spacing: 6px; margin-bottom: 14px;
+    }
+    .hero-sub {
+      font-size: 8px; color: var(--pur2);
+      letter-spacing: .18em; margin-bottom: 44px;
+    }
+
+    .start-btn {
+      display: inline-block;
+      background: var(--green); color: #000;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 11px; padding: 14px 36px;
+      text-decoration: none;
+      box-shadow: 5px 5px 0 #166534;
+      border: none; cursor: pointer;
+      animation: pulse-btn 2s step-end infinite;
+      transition: transform .1s, box-shadow .1s;
+    }
+    .start-btn:hover { transform: translate(2px,2px); box-shadow: 3px 3px 0 #166534; }
+    @keyframes pulse-btn { 0%,100%{ opacity:1 } 50%{ opacity:.75 } }
+
+    .ground {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 20px;
+      background: repeating-linear-gradient(90deg, var(--green) 0 16px, #15803d 16px 32px);
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      overflow: hidden; white-space: nowrap;
+      padding: 10px 0;
+    }
+    .ticker-wrap.pink { background: var(--pink); border-top: 3px solid #7a0040; border-bottom: 3px solid #7a0040; }
+    .ticker-wrap.purple { background: var(--purple); border-top: 3px solid #5b21b6; border-bottom: 3px solid #5b21b6; }
+    .ticker-inner {
+      display: inline-block;
+      font-size: 9px; letter-spacing: .12em;
+      animation: tick 28s linear infinite;
+    }
+    .ticker-wrap.pink .ticker-inner { color: #000; }
+    .ticker-wrap.purple .ticker-inner { color: #fff; }
+    @keyframes tick { 0%{ transform:translateX(100vw) } 100%{ transform:translateX(-100%) } }
+
+    /* ── LEVEL HEADER ── */
+    .lvl-head {
+      display: flex; align-items: flex-end; gap: 20px;
+      margin-bottom: 40px;
+    }
+    .lvl-num {
+      font-size: clamp(22px,5vw,46px);
+      color: var(--pink);
+      text-shadow: 3px 3px 0 #7a0040;
+      line-height: 1;
+    }
+    .lvl-info { padding-bottom: 4px; }
+    .lvl-name { font-size: 9px; color: var(--pur2); letter-spacing: .15em; }
+    .lvl-sub  { font-size: 7px; color: var(--green); margin-top: 5px; }
+
+    /* ── DIALOG BOX ── */
+    .dialog {
+      background: var(--bg2);
+      border: 3px solid var(--pink);
+      box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 4px rgba(255,110,180,.4), 5px 5px 0 #000;
+      padding: 22px;
+      position: relative;
+    }
+    .dialog-lbl {
+      position: absolute; top: -13px; left: 14px;
+      background: var(--pink); color: #000;
+      font-size: 7px; padding: 3px 10px;
+      white-space: nowrap;
+    }
+
+    .mini-box {
+      background: var(--bg2);
+      border: 2px solid var(--purple);
+      box-shadow: 3px 3px 0 #000;
+      padding: 16px;
+      position: relative;
+    }
+    .mini-lbl {
+      position: absolute; top: -12px; left: 10px;
+      font-size: 7px; padding: 3px 8px;
+      white-space: nowrap;
+    }
+
+    /* ── SECTION PADDING ── */
+    .sec { padding: 64px 0 80px; }
+    .sec-dark { background: var(--bg2); }
+
+    /* ── PIXEL DIVIDER ── */
+    .divider {
+      height: 4px;
+      background: repeating-linear-gradient(90deg,
+        var(--pink) 0 8px, var(--purple) 8px 16px);
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    }
+
+    .player-card {
+      background: var(--bg2);
+      border: 3px solid var(--pink);
+      box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 4px rgba(255,110,180,.3), 6px 6px 0 #000;
+      padding: 24px; text-align: center;
+    }
+    .sprite-box {
+      background: var(--bg3); border: 2px solid var(--dim);
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      font-size: 70px; margin-bottom: 16px;
+      position: relative; overflow: hidden;
+    }
+    .sprite-box::after {
+      content: 'PLAYER SELECT';
+      position: absolute; bottom: 4px; left: 0; right: 0;
+      font-size: 6px; color: var(--pur2); text-align: center;
+    }
+    .p-name { font-size: 11px; color: var(--yellow); text-shadow: 2px 2px 0 #78350f; margin-bottom: 8px; }
+    .p-class { font-size: 7px; color: var(--green); margin-bottom: 18px; }
+    .stat-row {
+      display: flex; justify-content: space-between;
+      font-size: 7px; padding: 7px 0;
+      border-top: 1px solid var(--dim);
+    }
+    .sv { color: var(--green); }
+    .sv-gold { color: var(--yellow); }
+
+    .about-right { display: flex; flex-direction: column; gap: 18px; }
+
+    .chip {
+      background: var(--bg3); border: 2px solid var(--pink);
+      color: var(--pink2); font-size: 7px; padding: 4px 8px;
+      display: inline-block; margin: 3px 3px 0 0;
+    }
+    .vt { font-family:'VT323',monospace; font-size:17px; color:#c4b0d8; line-height:1.55; }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+    }
+    .skill-group {
+      background: var(--bg); border: 2px solid var(--purple);
+      box-shadow: 3px 3px 0 #000; padding: 20px;
+      position: relative;
+    }
+    .sg-title {
+      position: absolute; top: -12px; left: 12px;
+      font-size: 7px; padding: 3px 8px;
+    }
+    .sk { margin-bottom: 11px; }
+    .sk-row {
+      display: flex; justify-content: space-between;
+      font-size: 7px; margin-bottom: 4px;
+    }
+    .sk-lv { color: var(--green); }
+    .sk-lv-gold { color: var(--yellow); }
+    .xpbg {
+      background: var(--bg3); height: 11px;
+      border: 2px solid var(--dim);
+    }
+    .xpfill {
+      height: 100%; width: 0;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      transition: width 1.4s ease;
+    }
+    .xpfill.g { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+    .xpfill.y { background: linear-gradient(90deg, var(--yellow), #f97316); }
+
+    /* ── QUESTS ── */
+    .quests-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+    }
+    .qcard {
+      background: var(--bg2);
+      border: 3px solid var(--purple);
+      box-shadow: 4px 4px 0 #000;
+      transition: transform .1s, box-shadow .1s;
+      overflow: hidden;
+    }
+    .qcard:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 #000; }
+    .qcard.span2 { grid-column: span 2; }
+    .qcard.gold-border { border-color: var(--yellow); }
+    .qcard.green-border { border-color: var(--green); }
+    .qcard.cyan-border { border-color: var(--cyan); }
+
+    .qhead {
+      background: var(--purple); padding: 9px 16px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .qhead.gold { background: #78350f; border-bottom: 2px solid var(--yellow); }
+    .qhead.dark { background: #064e3b; }
+    .qhead.navy { background: #1e3a5f; }
+    .qstatus { font-size: 7px; color: var(--green); }
+    .qstars { font-size: 10px; color: var(--yellow); }
+
+    .qbody { padding: 16px; }
+    .qname {
+      font-size: 9px; color: var(--white);
+      margin-bottom: 9px; line-height: 1.6;
+    }
+    .qname.gold { color: var(--yellow); }
+    .qdesc { font-family:'VT323',monospace; font-size:16px; color:#c4b0d8; line-height:1.4; margin-bottom:12px; }
+    .qtags { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:10px; }
+    .qtag {
+      background: var(--bg3); border: 1px solid var(--pink);
+      color: var(--pink2); font-size: 6px; padding: 3px 6px;
+    }
+    .qtag.g { border-color: var(--green); color: var(--green); }
+    .qtag.c { border-color: var(--cyan); color: var(--cyan); }
+    .qreward {
+      background: rgba(74,222,128,.09); border: 1px solid var(--green);
+      color: var(--green); font-size: 6px; padding: 7px 10px; margin-bottom: 10px;
+    }
+    .qreward.gold { background:rgba(251,191,36,.09); border-color:var(--yellow); color:var(--yellow); }
+    .qreward.cyan { background:rgba(34,211,238,.09); border-color:var(--cyan); color:var(--cyan); }
+
+    .pbtn {
+      display: inline-block;
+      font-family: 'Press Start 2P', monospace; font-size: 6px;
+      padding: 6px 12px; text-decoration: none;
+      transition: transform .1s; border: none; cursor: pointer;
+    }
+    .pbtn:hover { transform: translate(1px,1px); }
+    .pbtn.pk { background:var(--pink); color:#000; box-shadow:2px 2px 0 #7a0040; }
+    .pbtn.pu { background:var(--bg3); color:var(--pur2); border:2px solid var(--purple); box-shadow:2px 2px 0 #000; }
+
+    /* ── TRAINING ── */
+    .train-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .train-card {
+      background: var(--bg); border: 3px solid var(--pink);
+      box-shadow: 4px 4px 0 #000; padding: 22px; position: relative;
+    }
+    .train-badge {
+      position: absolute; top: -13px; right: 14px;
+      font-size: 7px; padding: 3px 10px; box-shadow: 2px 2px 0 #000;
+    }
+    .train-school { font-size: 9px; color: var(--yellow); margin-bottom: 7px; line-height: 1.5; }
+    .train-deg    { font-size: 7px; color: var(--pink2); margin-bottom: 5px; }
+    .train-date   { font-family:'VT323',monospace; font-size:15px; color:var(--dim); margin-bottom:12px; }
+    .ctag { background:var(--bg3); border:1px solid var(--purple); color:var(--pur2); font-size:6px; padding:3px 6px; display:inline-block; margin:2px 2px 0 0; }
+
+    /* ── ACHIEVEMENTS ── */
+    .ach-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .ach {
+      background: var(--bg2); border: 2px solid var(--yellow);
+      box-shadow: 3px 3px 0 #000; padding: 20px; text-align: center;
+      position: relative;
+    }
+    .ach.leg { grid-column: span 3; background: linear-gradient(135deg,var(--bg2),#1c0f00); border-color:var(--yellow); }
+    .ach-icon { font-size: 36px; display:block; margin-bottom:10px; }
+    .ach-name { font-size: 8px; color: var(--yellow); margin-bottom:7px; line-height:1.6; }
+    .ach-desc { font-family:'VT323',monospace; font-size:16px; color:#c4b0d8; line-height:1.35; }
+    .ach-rar {
+      position: absolute; top:7px; right:9px;
+      font-size: 6px;
+    }
+    .rar-leg { color:var(--yellow); }
+    .rar-rare { color:var(--cyan); }
+    .rar-unc  { color:var(--pur2); }
+
+    /* ── CONTACT ── */
+    .cbox {
+      background: var(--bg2);
+      border: 3px solid var(--pink);
+      box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 4px rgba(255,110,180,.3), 6px 6px 0 #000;
+      padding: 44px; max-width: 620px; margin: 0 auto; text-align: center;
+    }
+    .c-title { font-size: 20px; color: var(--pink); text-shadow: 3px 3px 0 #7a0040; margin-bottom: 16px; }
+    .c-desc { font-family:'VT323',monospace; font-size:20px; color:var(--pur2); line-height:1.5; margin-bottom:34px; }
+    .c-btns { display:flex; flex-direction:column; gap:11px; max-width:300px; margin:0 auto; }
+    .clink {
+      font-family:'Press Start 2P',monospace; font-size:8px;
+      padding:12px 20px; text-decoration:none;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      transition: transform .1s, box-shadow .1s;
+    }
+    .clink:hover { transform:translate(-2px,-2px); }
+    .clink.email   { background:var(--pink); color:#000; box-shadow:4px 4px 0 #7a0040; }
+    .clink.email:hover { box-shadow:6px 6px 0 #7a0040; }
+    .clink.gh      { background:#24292e; color:var(--white); border:2px solid var(--purple); box-shadow:4px 4px 0 #000; }
+    .clink.gh:hover { box-shadow:6px 6px 0 #000; }
+    .clink.li      { background:#0077b5; color:#fff; box-shadow:4px 4px 0 #004a73; }
+    .clink.li:hover { box-shadow:6px 6px 0 #004a73; }
+    .clink.ph      { background:var(--bg3); color:var(--pur2); border:2px solid var(--purple); box-shadow:4px 4px 0 #000; }
+    .clink.ai      { background:var(--purple); color:#fff; box-shadow:4px 4px 0 #5b21b6; }
+    .clink.ai:hover { box-shadow:6px 6px 0 #5b21b6; }
+    .clink.tr      { background:var(--yellow); color:#000; box-shadow:4px 4px 0 #78350f; }
+    .clink.tr:hover { box-shadow:6px 6px 0 #78350f; }
+
+    .transcript-btn {
+      display: inline-block; margin-top: 22px;
+      font-family: 'Press Start 2P', monospace; font-size: 7px;
+      background: var(--yellow); color: #000; text-decoration: none;
+      padding: 12px 16px; box-shadow: 4px 4px 0 #78350f;
+      transition: transform .1s, box-shadow .1s;
+    }
+    .transcript-btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 #78350f; }
+
+    .continue-box {
+      background:var(--bg2); border:3px solid var(--green);
+      box-shadow:4px 4px 0 #000;
+      padding:20px; max-width:320px; margin:30px auto 0; text-align:center;
+    }
+    .continue-txt { font-size:9px; color:var(--green); animation:pulse-btn 1.4s step-end infinite; }
+
+    /* ── FOOTER ── */
+    footer {
+      background:#000; border-top:3px solid var(--pink);
+      padding:18px; text-align:center; font-size:7px; color:var(--dim);
+      position:relative; z-index:1;
+    }
+
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(18px); transition:opacity .6s ease,transform .6s ease; }
+    .reveal.in { opacity:1; transform:none; }
+
+    /* ── BONUS QUESTS ── */
+    .bonus-head {
+      margin-top: 48px; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .bonus-head-line { flex: 1; height: 2px; background: var(--dim); }
+    .bonus-head-txt { font-size: 7px; color: var(--dim); letter-spacing: .2em; white-space: nowrap; }
+
+    .sq-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    }
+    .sqcard {
+      background: var(--bg2); border: 2px solid var(--dim);
+      padding: 14px; transition: border-color .15s;
+      position: relative;
+    }
+    .sqcard:hover { border-color: var(--purple); }
+    .sq-name { font-size: 7px; color: var(--pink2); margin-bottom: 7px; line-height: 1.6; }
+    .sq-desc { font-family:'VT323',monospace; font-size:14px; color:#8b7099; line-height:1.3; margin-bottom:8px; }
+    .sq-tags { display:flex; flex-wrap:wrap; gap:3px; margin-bottom:8px; }
+    .sq-tag { font-size:5px; background:var(--bg3); border:1px solid var(--dim); color:var(--dim); padding:2px 4px; }
+    .sq-link { font-family:'Press Start 2P',monospace; font-size:5px; color:var(--pur2); text-decoration:none; border:1px solid var(--purple); padding:3px 6px; }
+    .sq-link:hover { background:var(--purple); color:#fff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:660px) {
+      .about-grid,.skills-grid,.quests-grid,.train-grid { grid-template-columns:1fr; }
+      .qcard.span2 { grid-column:span 1; }
+      .ach-grid { grid-template-columns:1fr 1fr; }
+      .ach.leg { grid-column:span 2; }
+      .hero-title { font-size:28px; }
+      .hud { padding: 8px 10px; }
+      .hud-mid { display:none; }
+      .hud-hp, .hud-xp { white-space: nowrap; flex-shrink: 0; }
+      .hpbar { width: 48px; }
+      .sq-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:420px) {
+      .hud-xp { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<!-- ═══ HUD ═══ -->
+<div class="hud">
+  <div class="hud-hp">
+    ♥♥♥
+    <span class="hpbar"><span class="hpbar-fill"></span></span>
+    HP: 92/100
+  </div>
+  <div class="hud-mid">ANGELA.EXE</div>
+  <div class="hud-xp">XP: DATA SCIENCE LVL 05</div>
+  <details class="hud-docs">
+    <summary>DOCS</summary>
+    <div class="hud-docs-menu">
+      <a href="./Angela_Kang_DS_Resume.pdf" target="_blank" rel="noopener">DS RESUME</a>
+      <a href="./Angela_Kang_AI_Resume.pdf" target="_blank" rel="noopener">AI RESUME</a>
+      <a href="./Angela_Kang_Transcript.pdf" target="_blank" rel="noopener">TRANSCRIPT</a>
+    </div>
+  </details>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section id="home" style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding-top:44px;overflow:hidden;">
+
+  <!-- clouds -->
+  <span class="cloud" style="top:14%;left:4%;animation-delay:0s;font-size:26px;">☁</span>
+  <span class="cloud" style="top:24%;left:13%;animation-delay:1.2s;font-size:16px;">☁</span>
+  <span class="cloud" style="top:10%;right:6%;animation-delay:2s;font-size:30px;color:var(--pur2);">☁</span>
+  <span class="cloud" style="top:32%;right:14%;animation-delay:.6s;font-size:20px;color:#7c3aed;">☁</span>
+  <span class="cloud" style="top:55%;left:5%;animation-delay:3s;font-size:14px;">☁</span>
+  <!-- stars -->
+  <span class="star-deco" style="top:18%;left:22%;animation-delay:0s;font-size:18px;color:var(--yellow);">⭐</span>
+  <span class="star-deco" style="top:60%;left:16%;animation-delay:1s;font-size:13px;color:var(--yellow);">★</span>
+  <span class="star-deco" style="top:38%;right:18%;animation-delay:2s;font-size:16px;color:var(--yellow);">⭐</span>
+  <span class="star-deco" style="top:70%;right:9%;animation-delay:.5s;font-size:11px;color:#fbbf24;">★</span>
+  <span class="star-deco" style="top:13%;left:55%;animation-delay:1.5s;font-size:20px;color:var(--yellow);">✦</span>
+  <span class="star-deco" style="top:80%;left:40%;animation-delay:2.5s;font-size:14px;color:var(--yellow);">★</span>
+
+  <p class="hero-yr">★ ─── 2026 ─── ★</p>
+  <h1 class="hero-title">PORTFOLIO</h1>
+  <p class="hero-sub">DATA SCIENTIST &nbsp;·&nbsp; ML ENGINEER</p>
+  <a href="#about" class="start-btn">► PRESS START</a>
+
+  <div class="ground"></div>
+</section>
+
+<!-- ticker 1 -->
+<div class="ticker-wrap pink" style="position:relative;z-index:1;">
+  <span class="ticker-inner">MISSIONS COMPLETE ★ DEEP LEARNING ★ RAG PIPELINES ★ GPU KERNELS ★ DATA ENGINEERING ★ TRANSFER LEARNING ★ SMOTE ★ FASTAPI ★ WEBSOCKET ★ CUDA ★ REACT ★ NLP ★ HACKATHON WINNER ★ MISSIONS COMPLETE ★ DEEP LEARNING ★ RAG PIPELINES ★ GPU KERNELS ★&nbsp;&nbsp;</span>
+</div>
+
+<!-- ═══ LEVEL 01 — ABOUT ═══ -->
+<section class="sec" id="about">
+  <div class="container">
+    <div class="lvl-head reveal">
+      <div class="lvl-num">LEVEL<br>01</div>
+      <div class="lvl-info">
+        <div class="lvl-name">ABOUT</div>
+        <div class="lvl-sub">► ANGELA KANG</div>
+      </div>
+    </div>
+
+    <div class="about-grid reveal">
+      <!-- player card -->
+      <div class="player-card">
+        <div class="sprite-box">👩‍💻</div>
+        <div class="p-name">ANGELA KANG</div>
+        <div class="p-class">DATA SCIENTIST · ML ENGINEER</div>
+        <div class="stat-row"><span>SCHOOL</span><span class="sv">USC + UCSB</span></div>
+        <div class="stat-row"><span>DEGREE</span><span class="sv">MS + BS DATA SCI</span></div>
+        <div class="stat-row"><span>LOCATION</span><span class="sv">LOS ANGELES, CA</span></div>
+        <div class="stat-row"><span>SPEC</span><span class="sv">ML · GPU · NLP</span></div>
+        <div class="stat-row"><span>STATUS</span><span class="sv-gold" style="color:var(--yellow);">★ OPEN TO ROLES ★</span></div>
+        <div class="stat-row"><span>HACKATHON</span><span class="sv-gold" style="color:var(--yellow);">★ WINNER ★</span></div>
+      </div>
+
+      <!-- right side -->
+      <div class="about-right">
+        <div class="dialog">
+          <span class="dialog-lbl">HELLO !!</span>
+          <div class="vt" style="margin-top:8px;">
+            <p>Player: <span style="color:var(--pink2);">Angela Kang</span></p>
+            <p style="margin-top:6px;">Role: <span style="color:var(--pink2);">Data Scientist &amp; ML Engineer</span></p>
+            <p style="margin-top:6px;">Mission: <span style="color:var(--pink2);">Build impactful ML systems — from CUDA kernels to deployed inference APIs.</span></p>
+            <p style="margin-top:6px;">Status: <span style="color:var(--green);">Available · Ready for full-time DS &amp; ML Engineering roles.</span></p>
+            <p style="margin-top:12px;color:var(--yellow);">Let's start the game! ▼</p>
+          </div>
+        </div>
+
+        <div class="mini-box">
+          <span class="mini-lbl" style="background:var(--purple);color:#fff;">TECH STACK</span>
+          <div style="margin-top:12px;">
+            <span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">NumPy</span>
+            <span class="chip">TensorFlow</span><span class="chip">Scikit-learn</span><span class="chip">XGBoost</span>
+            <span class="chip">CUDA</span><span class="chip">SQL</span><span class="chip">Streamlit</span>
+            <span class="chip">Spark</span><span class="chip">BeautifulSoup</span><span class="chip">Tesseract OCR</span>
+          </div>
+        </div>
+
+        <div class="mini-box" style="border-color:var(--yellow);">
+          <span class="mini-lbl" style="background:var(--yellow);color:#000;">CURRENT MISSION</span>
+          <div class="vt" style="margin-top:12px;line-height:1.5;">
+            <p style="color:var(--yellow);">▶ Seeking entry-level DS &amp; ML roles</p>
+            <p style="color:var(--dim);">&nbsp;&nbsp;On-site · Remote · Open to relocation</p>
+            <p style="color:var(--yellow);margin-top:7px;">▶ Strengths: ML · GPU · NLP · CV</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="position:relative;z-index:1;"></div>
+
+<!-- ticker 2 -->
+<div class="ticker-wrap purple" style="position:relative;z-index:1;">
+  <span class="ticker-inner" style="animation-delay:-9s;">SKILL TREE ★ PYTHON: MAX LVL ★ SQL: MAX LVL ★ CUDA: EXPERT ★ MACHINE LEARNING: EXPERT ★ TENSORFLOW: EXPERT ★ PANDAS: EXPERT ★ DEEP LEARNING: EXPERT ★ NUMPY: EXPERT ★ SPARK: ADVANCED ★ SMOTE: EXPERT ★&nbsp;&nbsp;</span>
+</div>
+
+<!-- ═══ LEVEL 02 — SKILLS ═══ -->
+<section class="sec sec-dark" id="skills">
+  <div class="container">
+    <div class="lvl-head reveal">
+      <div class="lvl-num">LEVEL<br>02</div>
+      <div class="lvl-info">
+        <div class="lvl-name">SKILLS</div>
+        <div class="lvl-sub">► WHAT I WORK WITH</div>
+      </div>
+    </div>
+
+    <div class="skills-grid reveal">
+      <!-- ML / AI -->
+      <div class="skill-group">
+        <span class="sg-title" style="background:var(--purple);color:#fff;">ML / AI</span>
+        <div style="height:10px;"></div>
+        <div class="sk"><div class="sk-row"><span>Machine Learning</span><span class="sk-lv">MAX</span></div><div class="xpbg"><div class="xpfill" data-w="96%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>Deep Learning / CV</span><span class="sk-lv">EXPERT</span></div><div class="xpbg"><div class="xpfill" data-w="88%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>Transfer Learning</span><span class="sk-lv">EXPERT</span></div><div class="xpbg"><div class="xpfill" data-w="86%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>NLP / RAG / LLMs</span><span class="sk-lv">ADVANCED</span></div><div class="xpbg"><div class="xpfill" data-w="80%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>Imbalanced Learning</span><span class="sk-lv">EXPERT</span></div><div class="xpbg"><div class="xpfill" data-w="88%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>Feature Engineering</span><span class="sk-lv">EXPERT</span></div><div class="xpbg"><div class="xpfill" data-w="90%"></div></div></div>
+      </div>
+
+      <!-- Languages -->
+      <div class="skill-group">
+        <span class="sg-title" style="background:var(--pink);color:#000;">LANGUAGES</span>
+        <div style="height:10px;"></div>
+        <div class="sk"><div class="sk-row"><span>Python</span><span class="sk-lv-gold" style="color:var(--yellow);">★ MAX ★</span></div><div class="xpbg"><div class="xpfill g" data-w="99%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>SQL</span><span class="sk-lv-gold" style="color:var(--yellow);">★ MAX ★</span></div><div class="xpbg"><div class="xpfill g" data-w="96%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>CUDA / C</span><span class="sk-lv">EXPERT</span></div><div class="xpbg"><div class="xpfill g" data-w="83%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>JavaScript / React</span><span class="sk-lv">ADVANCED</span></div><div class="xpbg"><div class="xpfill g" data-w="76%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>R</span><span class="sk-lv">ADVANCED</span></div><div class="xpbg"><div class="xpfill g" data-w="78%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>MATLAB / LaTeX / C++</span><span class="sk-lv">PROFICIENT</span></div><div class="xpbg"><div class="xpfill g" data-w="70%"></div></div></div>
+      </div>
+
+      <!-- Data Engineering -->
+      <div class="skill-group">
+        <span class="sg-title" style="background:var(--cyan);color:#000;">DATA ENGINEERING</span>
+        <div style="height:10px;"></div>
+        <div class="sk"><div class="sk-row"><span>Custom SQL Ops</span><span class="sk-lv">EXPERT</span></div><div class="xpbg"><div class="xpfill y" data-w="92%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>Apache Spark / Hadoop</span><span class="sk-lv">ADVANCED</span></div><div class="xpbg"><div class="xpfill y" data-w="75%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>MySQL / MongoDB</span><span class="sk-lv">ADVANCED</span></div><div class="xpbg"><div class="xpfill y" data-w="80%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>Data Pipelines</span><span class="sk-lv">EXPERT</span></div><div class="xpbg"><div class="xpfill y" data-w="86%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>Web Scraping</span><span class="sk-lv">EXPERT</span></div><div class="xpbg"><div class="xpfill y" data-w="88%"></div></div></div>
+      </div>
+
+      <!-- GPU / Systems -->
+      <div class="skill-group">
+        <span class="sg-title" style="background:var(--green);color:#000;">GPU / SYSTEMS</span>
+        <div style="height:10px;"></div>
+        <div class="sk"><div class="sk-row"><span>CUDA Programming</span><span class="sk-lv">EXPERT</span></div><div class="xpbg"><div class="xpfill" data-w="85%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>GPU Optimization</span><span class="sk-lv">EXPERT</span></div><div class="xpbg"><div class="xpfill" data-w="83%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>cuBLAS / NVCC / GCC</span><span class="sk-lv">ADVANCED</span></div><div class="xpbg"><div class="xpfill" data-w="79%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>Python C Bindings</span><span class="sk-lv">EXPERT</span></div><div class="xpbg"><div class="xpfill" data-w="82%"></div></div></div>
+        <div class="sk"><div class="sk-row"><span>Linux / Ubuntu</span><span class="sk-lv">ADVANCED</span></div><div class="xpbg"><div class="xpfill" data-w="78%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="position:relative;z-index:1;"></div>
+
+<!-- ticker 3 -->
+<div class="ticker-wrap pink" style="position:relative;z-index:1;">
+  <span class="ticker-inner" style="animation-delay:-14s;">QUEST LOG ★ AI GROUP CHAT ★ PDF CHAT RAG ★ SCOUT AI PLATFORM ★ APS FAILURE PREDICTION ★ JUTE PEST ★ CUDA CONVOLUTION ★ COVID SQL ENGINE ★ REDDIT NLP ★ DATA PIPELINE ★ TIME SERIES ★ SVM AUDIO ★ DECISION TREES ★&nbsp;&nbsp;</span>
+</div>
+
+<!-- ═══ LEVEL 03 — QUEST LOG ═══ -->
+<section class="sec" id="projects">
+  <div class="container">
+    <div class="lvl-head reveal">
+      <div class="lvl-num">LEVEL<br>03</div>
+      <div class="lvl-info">
+        <div class="lvl-name">PROJECTS</div>
+        <div class="lvl-sub">► WHAT I'VE BUILT</div>
+      </div>
+    </div>
+
+    <div class="quests-grid">
+
+      <!-- SCOUT — featured -->
+      <div class="qcard span2 gold-border reveal">
+        <div class="qhead gold">
+          <span class="qstatus"></span>
+          <span class="qstars">★★★★★</span>
+        </div>
+        <div class="qbody">
+          <div class="qname gold">SCOUT — AI FREELANCER-CLIENT COMMUNICATION PLATFORM</div>
+          <div class="qdesc">
+            Engineered AI Scope Guardian — a RAG-based system that detects contract violations
+            in real time and auto-generates change orders and invoices (ScopeFlagCard,
+            ChangeOrderPreview). Built embeddings-based freelancer-client matching scoring
+            candidates across skill fit, communication style, timeline, and budget alignment.
+            Served as Product Lead delivering React + Vite web + React Native Android app
+            with real-time WebSocket chat UI and conversational onboarding flows.
+          </div>
+          <div class="qtags">
+            <span class="qtag">React + Vite</span><span class="qtag">React Native</span>
+            <span class="qtag">FastAPI</span><span class="qtag">Python</span>
+            <span class="qtag">WebSocket</span><span class="qtag">RAG</span>
+            <span class="qtag">Embeddings</span><span class="qtag">LLM</span>
+          </div>
+          <div class="qreward gold">⚔ Product Lead · UX design through deployment · cross-platform (web + Android)</div>
+          <div style="margin-top:10px;">
+            <a href="https://github.com/angelaykang" target="_blank" class="pbtn pk">GITHUB ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Group Chat — featured -->
+      <div class="qcard span2 reveal" style="border-color:var(--cyan);">
+        <div class="qhead" style="background:#0c3347;border-bottom:2px solid var(--cyan);">
+          <span class="qstatus"></span>
+          <span class="qstars" style="color:var(--cyan);">★★★★★</span>
+        </div>
+        <div class="qbody">
+          <div class="qname" style="color:var(--cyan);">AI GROUP CHAT — LLM-POWERED REAL-TIME MESSAGING</div>
+          <div class="qdesc">
+            Full-stack AI group chat with FastAPI + MySQL backend and real-time WebSocket
+            messaging. Integrated Llama/OpenAI-compatible LLM to generate in-chat replies
+            alongside human messages. Static web frontend paired with an Android Trusted Web
+            Activity (TWA) wrapper — one codebase, two platforms.
+          </div>
+          <div class="qtags">
+            <span class="qtag c">FastAPI</span><span class="qtag c">MySQL</span>
+            <span class="qtag c">WebSocket</span><span class="qtag c">Llama / OpenAI API</span>
+            <span class="qtag c">Python</span><span class="qtag c">Android TWA</span>
+          </div>
+          <div class="qreward cyan">⚡ Open-source LLM integration · multi-room · web + Android deployment</div>
+          <div style="margin-top:10px;">
+            <a href="https://github.com/angelaykang/ai-group-chat" target="_blank" class="pbtn pk">GITHUB ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PDF Chat -->
+      <div class="qcard reveal" style="border-color:var(--pur2);">
+        <div class="qhead" style="background:#2d0060;border-bottom:2px solid var(--pur2);">
+          <span class="qstatus"></span>
+          <span class="qstars" style="color:var(--pur2);">★★★★★</span>
+        </div>
+        <div class="qbody">
+          <div class="qname">PDF CHAT — RAG DOCUMENT Q&amp;A</div>
+          <div class="qdesc">
+            Chat with your PDFs using retrieval-augmented generation. Extracts text, creates
+            vector embeddings, and uses LLMs to answer questions from your documents.
+            Supports both OpenAI and open-source model backends.
+          </div>
+          <div class="qtags">
+            <span class="qtag">Python</span><span class="qtag">RAG</span>
+            <span class="qtag">Vector Embeddings</span><span class="qtag">LLM</span>
+            <span class="qtag">OpenAI API</span>
+          </div>
+          <div class="qreward" style="border-color:var(--pur2);color:var(--pur2);background:rgba(192,132,252,.08);">📄 Swap models without changing the pipeline · works with local open-source LLMs</div>
+          <div style="margin-top:10px;">
+            <a href="https://github.com/angelaykang/pdf-chat" target="_blank" class="pbtn pk">GITHUB ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reddit NLP (merged) -->
+      <div class="qcard reveal">
+        <div class="qhead">
+          <span class="qstatus"></span>
+          <span class="qstars">★★★★☆</span>
+        </div>
+        <div class="qbody">
+          <div class="qname">REDDIT NLP PIPELINE &amp; EMBEDDINGS</div>
+          <div class="qdesc">
+            End-to-end Reddit pipeline: scrape posts, preprocess, store in MySQL, then evaluate
+            Doc2Vec and Word2Vec-assisted bag-of-words representations via cosine-distance
+            clustering. Automated on Linux/Ubuntu with visualization output.
+          </div>
+          <div class="qtags">
+            <span class="qtag">Python</span><span class="qtag">Doc2Vec</span>
+            <span class="qtag">Word2Vec</span><span class="qtag">MySQL</span>
+            <span class="qtag">Web Scraping</span><span class="qtag">Clustering</span>
+          </div>
+          <div class="qreward">🧠 Scrape → Store → Embed → Cluster · Embedding method comparison</div>
+          <div style="margin-top:10px;">
+            <a href="https://github.com/angelaykang/reddit_forum_analysis" target="_blank" class="pbtn pk">PIPELINE ↗</a>
+            &nbsp;
+            <a href="https://github.com/angelaykang/reddit-embeddings" target="_blank" class="pbtn pu">EMBEDDINGS ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- APS -->
+      <div class="qcard gold-border reveal">
+        <div class="qhead" style="background:#78350f;border-bottom:2px solid var(--yellow);">
+          <span class="qstatus"></span>
+          <span class="qstars">★★★★★</span>
+        </div>
+        <div class="qbody">
+          <div class="qname">APS FAILURE PREDICTION</div>
+          <div class="qdesc">
+            Predictive maintenance model for truck Air Pressure System failures on 60,000 training
+            examples across 170 anonymized sensor features (1.67% failure rate). Applied SMOTE
+            for class balancing, trained Random Forest and XGBoost, minimizing false negatives
+            — the high-cost error in failure detection.
+          </div>
+          <div class="qtags">
+            <span class="qtag">Python</span><span class="qtag">XGBoost</span>
+            <span class="qtag">scikit-learn</span><span class="qtag">SMOTE</span>
+            <span class="qtag">Random Forest</span>
+          </div>
+          <div class="qreward gold">⭐ 99.31% ACCURACY · AUC 0.9946 · only 66 false negatives vs 98–160 from baseline models</div>
+          <div style="margin-top:10px;">
+            <a href="https://github.com/angelaykang/aps-failure-prediction" target="_blank" class="pbtn pk">GITHUB ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jute Pest -->
+      <div class="qcard reveal">
+        <div class="qhead">
+          <span class="qstatus"></span>
+          <span class="qstars">★★★★☆</span>
+        </div>
+        <div class="qbody">
+          <div class="qname">JUTE PEST CLASSIFICATION</div>
+          <div class="qdesc">
+            Deep learning image classifier for 17 jute pest classes using transfer learning
+            on pre-trained CNNs. Benchmarked ResNet50, EfficientNet, VGG16, and DenseNet201
+            with data augmentation. DenseNet201 achieved 96.6% accuracy and AUC 0.999.
+          </div>
+          <div class="qtags">
+            <span class="qtag">Python</span><span class="qtag">TensorFlow</span>
+            <span class="qtag">DenseNet201</span><span class="qtag">Transfer Learning</span>
+            <span class="qtag">ImageNet</span>
+          </div>
+          <div class="qreward gold">⭐ DenseNet201 outperformed ResNet50, EfficientNet &amp; VGG16 — best architecture selected via systematic benchmark</div>
+          <div style="margin-top:10px;">
+            <a href="https://github.com/angelaykang/jute-pest-classification" target="_blank" class="pbtn pk">GITHUB ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CUDA -->
+      <div class="qcard green-border reveal">
+        <div class="qhead dark">
+          <span class="qstatus" style="color:var(--green);">✓ QUEST COMPLETE</span>
+          <span class="qstars" style="color:var(--green);">★★★★★</span>
+        </div>
+        <div class="qbody">
+          <div class="qname">CUDA MATRIX CONVOLUTION</div>
+          <div class="qdesc">
+            CPU and GPU implementations of matrix multiplication and image convolution using CUDA.
+            Optimised memory access patterns and parallel execution for significant GPU speedups.
+            Benchmarked naive → tiled → cuBLAS at 512/1024/2048. Integrated Python bindings
+            via shared library (.dll/.so) for use in DS workflows.
+          </div>
+          <div class="qtags">
+            <span class="qtag g">CUDA</span><span class="qtag g">C</span>
+            <span class="qtag g">cuBLAS</span><span class="qtag g">Python Bindings</span>
+            <span class="qtag g">NVCC</span>
+          </div>
+          <div class="qreward" style="border-color:var(--green);color:var(--green);background:rgba(74,222,128,.08);">⚡ Measurable GPU speedups at every size · drop-in usable from Python without rewriting DS code</div>
+          <div style="margin-top:10px;">
+            <a href="https://github.com/angelaykang/cuda-matrix-convolution" target="_blank" class="pbtn pk">GITHUB ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- pylovers_lab2 — Data Collection Pipeline -->
+      <div class="qcard reveal" style="border-color:var(--pink);">
+        <div class="qhead" style="background:#4a0066;">
+          <span class="qstatus"></span>
+          <span class="qstars">★★★★☆</span>
+        </div>
+        <div class="qbody">
+          <div class="qname">DATA COLLECTION PIPELINE FOR CAREER CHATBOT</div>
+          <div class="qdesc">
+            Multi-source data collection system for a domain-specific career chatbot.
+            Integrated Greenhouse API to collect job salary data, scraped job listings
+            via RemoteOK (BeautifulSoup), and built a PDF/OCR resume parser using
+            pdfplumber + pytesseract. All data merged into a unified dataset for downstream NLP.
+          </div>
+          <div class="qtags">
+            <span class="qtag">Python</span><span class="qtag">BeautifulSoup</span>
+            <span class="qtag">Greenhouse API</span><span class="qtag">pytesseract</span>
+            <span class="qtag">pdfplumber</span><span class="qtag">OCR</span>
+            <span class="qtag">pandas</span>
+          </div>
+          <div class="qreward">🔗 3 heterogeneous sources unified into one dataset ready for NLP training</div>
+          <div style="margin-top:10px;">
+            <a href="https://github.com/angelaykang/pylovers_lab2" target="_blank" class="pbtn pk">GITHUB ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- COVID SQL -->
+      <div class="qcard cyan-border span2 reveal">
+        <div class="qhead navy">
+          <span class="qstatus"></span>
+          <span class="qstars" style="color:var(--cyan);">★★★★☆</span>
+        </div>
+        <div class="qbody">
+          <div class="qname">COVID CUSTOM SQL ENGINE</div>
+          <div class="qdesc">
+            Designed and implemented core relational DB operations (filter, select, groupby, join) from
+            scratch using hash-based algorithms — no pandas, no SQL engines. Built a DataFrame-like
+            abstraction to process large COVID-19 CSV datasets efficiently. Developed an interactive
+            Streamlit dashboard to visualise time-series trends and support EDA.
+          </div>
+          <div class="qtags">
+            <span class="qtag c">Python</span><span class="qtag c">Streamlit</span>
+            <span class="qtag c">Hash Join O(n+m)</span><span class="qtag c">Custom DataFrame</span>
+            <span class="qtag c">Time Series EDA</span>
+          </div>
+          <div class="qreward cyan">🔄 Built entirely from scratch — proves understanding of how databases actually work</div>
+          <div style="margin-top:10px;">
+            <a href="https://covid-custom-sql-engine.streamlit.app/" target="_blank" class="pbtn" style="background:var(--green);color:#000;">▶ LIVE DEMO</a>
+            &nbsp;
+            <a href="https://github.com/angelaykang/covid-custom-sql-engine" target="_blank" class="pbtn pk">GITHUB ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── BONUS QUESTS ── -->
+    <div class="bonus-head reveal">
+      <div class="bonus-head-line"></div>
+      <div class="bonus-head-txt">◆ MORE PROJECTS ◆</div>
+      <div class="bonus-head-line"></div>
+    </div>
+
+    <div class="sq-grid reveal">
+
+      <div class="sqcard">
+        <div class="sq-name">TIME-SERIES ACTIVITY CLASSIFICATION</div>
+        <div class="sq-desc">Classify 6 human activities (bending, cycling, sitting, walking…) from wearable sensor data (AReM). RFE, L1 logistic regression, Naive Bayes.</div>
+        <div class="sq-tags"><span class="sq-tag">Python</span><span class="sq-tag">Time Series</span><span class="sq-tag">RFE</span><span class="sq-tag">Naive Bayes</span><span class="sq-tag">scikit-learn</span></div>
+        <a href="https://github.com/angelaykang/time-series-activity-classification" target="_blank" class="sq-link">GITHUB ↗</a>
+      </div>
+
+      <div class="sqcard">
+        <div class="sq-name">ANURAN CLASSIFICATION — SVM</div>
+        <div class="sq-desc">Multi-class &amp; multi-label classification of frog species from audio using SVM and MFCC acoustic features.</div>
+        <div class="sq-tags"><span class="sq-tag">Python</span><span class="sq-tag">SVM</span><span class="sq-tag">MFCC</span><span class="sq-tag">Audio ML</span><span class="sq-tag">Multi-label</span></div>
+        <a href="https://github.com/angelaykang/anuran-classification-svm" target="_blank" class="sq-link">GITHUB ↗</a>
+      </div>
+
+      <div class="sqcard">
+        <div class="sq-name">MEDICAL DIAGNOSIS — DECISION TREES</div>
+        <div class="sq-desc">Interpretable ML for medical diagnosis: decision tree visualization + rule extraction. Also compares LASSO, Ridge, PCR, XGBoost regression.</div>
+        <div class="sq-tags"><span class="sq-tag">Python</span><span class="sq-tag">Decision Trees</span><span class="sq-tag">LASSO</span><span class="sq-tag">XGBoost</span><span class="sq-tag">Ridge</span></div>
+        <a href="https://github.com/angelaykang/medical-diagnosis-decision-trees" target="_blank" class="sq-link">GITHUB ↗</a>
+      </div>
+
+      <div class="sqcard">
+        <div class="sq-name">BREAST CANCER — LEARNING METHODS</div>
+        <div class="sq-desc">Comparison of supervised, semi-supervised, unsupervised, and active learning methods on breast cancer and banknote authentication datasets.</div>
+        <div class="sq-tags"><span class="sq-tag">Python</span><span class="sq-tag">Semi-supervised</span><span class="sq-tag">Active Learning</span><span class="sq-tag">Clustering</span></div>
+        <a href="https://github.com/angelaykang/breast-cancer-learning-methods" target="_blank" class="sq-link">GITHUB ↗</a>
+      </div>
+
+      <div class="sqcard">
+        <div class="sq-name">STUDENT PERFORMANCE PREDICTION</div>
+        <div class="sq-desc">Predict student final grades (G3) with EDA, PCA dimensionality reduction, and Linear / Ridge / Lasso regression on UCI Student Performance data.</div>
+        <div class="sq-tags"><span class="sq-tag">Python</span><span class="sq-tag">PCA</span><span class="sq-tag">Ridge</span><span class="sq-tag">Lasso</span><span class="sq-tag">scikit-learn</span></div>
+        <a href="https://github.com/angelaykang/student-performance-prediction" target="_blank" class="sq-link">GITHUB ↗</a>
+      </div>
+
+      <div class="sqcard">
+        <div class="sq-name">VERTEBRAL COLUMN CLASSIFICATION</div>
+        <div class="sq-desc">KNN from scratch for binary classification of spinal abnormalities. Compares Euclidean, Manhattan, Chebyshev, and Minkowski distance metrics.</div>
+        <div class="sq-tags"><span class="sq-tag">Python</span><span class="sq-tag">KNN from scratch</span><span class="sq-tag">Distance Metrics</span></div>
+        <a href="https://github.com/angelaykang/vertebral-column-classification" target="_blank" class="sq-link">GITHUB ↗</a>
+      </div>
+
+      <div class="sqcard">
+        <div class="sq-name">POWER PLANT ENERGY PREDICTION</div>
+        <div class="sq-desc">Predict net hourly energy output of a Combined Cycle Power Plant using regression and KNN. Achieves 14.31 MSE on 9,568 data points.</div>
+        <div class="sq-tags"><span class="sq-tag">Python</span><span class="sq-tag">Regression</span><span class="sq-tag">KNN</span><span class="sq-tag">EDA</span></div>
+        <a href="https://github.com/angelaykang/power-plant-energy-prediction" target="_blank" class="sq-link">GITHUB ↗</a>
+      </div>
+
+      <div class="sqcard">
+        <div class="sq-name">PAPER AIRPLANE EXPERIMENT — RCBD</div>
+        <div class="sq-desc">Randomized Complete Block Design experiment on paperclip placement and flight distance. ANOVA + Tukey HSD post-hoc analysis in R.</div>
+        <div class="sq-tags"><span class="sq-tag">R</span><span class="sq-tag">ANOVA</span><span class="sq-tag">Tukey HSD</span><span class="sq-tag">RCBD</span><span class="sq-tag">DOE</span></div>
+        <a href="https://github.com/angelaykang/paper-airplane-experiment-rcbd" target="_blank" class="sq-link">GITHUB ↗</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="position:relative;z-index:1;"></div>
+
+<!-- ticker 4 -->
+<div class="ticker-wrap purple" style="position:relative;z-index:1;">
+  <span class="ticker-inner" style="animation-delay:-5s;">TRAINING ARCHIVES ★ USC MS APPLIED DATA SCIENCE ★ UCSB BS STATISTICS & DATA SCIENCE ★ MACHINE LEARNING ★ TIME SERIES ★ STOCHASTIC PROCESSES ★ LINEAR ALGEBRA ★ DATA STRUCTURES & ALGORITHMS ★&nbsp;&nbsp;</span>
+</div>
+
+<!-- ═══ LEVEL 04 — TRAINING ═══ -->
+<section class="sec sec-dark" id="education">
+  <div class="container">
+    <div class="lvl-head reveal">
+      <div class="lvl-num">LEVEL<br>04</div>
+      <div class="lvl-info">
+        <div class="lvl-name">EDUCATION</div>
+        <div class="lvl-sub">► BACKGROUND</div>
+      </div>
+    </div>
+
+    <div class="train-grid reveal">
+      <div class="train-card">
+        <span class="train-badge" style="background:var(--green);color:#000;">CURRENT</span>
+        <div class="train-school">UNIVERSITY OF SOUTHERN CALIFORNIA</div>
+        <div class="train-deg">MS · Applied Data Science</div>
+        <div class="train-date">Aug 2025 – May 2027 (expected) · Los Angeles, CA</div>
+        <div>
+          <span class="ctag">ML for Data Science</span>
+          <span class="ctag">Foundations of Data Management</span>
+        </div>
+      </div>
+
+      <div class="train-card">
+        <span class="train-badge" style="background:var(--pur2);color:#fff;">COMPLETE</span>
+        <div class="train-school">UC SANTA BARBARA</div>
+        <div class="train-deg">BS · Statistics &amp; Data Science</div>
+        <div class="train-date">Sep 2021 – Jun 2025 · Goleta, CA</div>
+        <div>
+          <span class="ctag">Probability &amp; Statistics</span>
+          <span class="ctag">Machine Learning</span>
+          <span class="ctag">Multivariate Analysis</span>
+          <span class="ctag">Time Series</span>
+          <span class="ctag">Stochastic Processes</span>
+          <span class="ctag">Linear Algebra</span>
+          <span class="ctag">Real Analysis</span>
+          <span class="ctag">Numerical Methods</span>
+          <span class="ctag">Data Structures &amp; Algorithms</span>
+          <span class="ctag">Experimental Design</span>
+          <span class="ctag">Python Programming</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;" class="reveal">
+      <a href="./Angela_Kang_Transcript.pdf" target="_blank" rel="noopener" class="transcript-btn">VIEW TRANSCRIPT</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="position:relative;z-index:1;"></div>
+
+<!-- ═══ LEVEL 05 — ACHIEVEMENTS ═══ -->
+<section class="sec" id="achievements">
+  <div class="container">
+    <div class="lvl-head reveal">
+      <div class="lvl-num">LEVEL<br>05</div>
+      <div class="lvl-info">
+        <div class="lvl-name">ACHIEVEMENTS</div>
+        <div class="lvl-sub">► HIGHLIGHTS</div>
+      </div>
+    </div>
+
+    <div class="ach-grid reveal">
+
+      <!-- Hackathon — LEGENDARY -->
+      <div class="ach leg">
+        <span class="ach-rar rar-leg">★ LEGENDARY</span>
+        <span class="ach-icon">🏆</span>
+        <div class="ach-name">BEST OVERALL HACK · SBHACKS XI</div>
+        <div class="ach-desc">
+          Won Best Overall Hack out of 60+ competing teams.<br><br>
+          Built <strong style="color:var(--yellow);">My Meowcho</strong> — a Chrome extension
+          that gamifies productivity with animated cats, customizable accessories, and sound effects.
+          Led front-end development using JavaScript, HTML/CSS, and Chrome APIs.
+          Collaborated in a 4-member team.
+        </div>
+      </div>
+
+      <div class="ach">
+        <span class="ach-rar rar-rare">◆ RARE</span>
+        <span class="ach-icon">📊</span>
+        <div class="ach-name">GOOGLE DATA ANALYTICS CERT</div>
+        <div class="ach-desc">Professional Certificate<br>Coursera · Authorized by Google · 2025</div>
+      </div>
+
+      <div class="ach">
+        <span class="ach-rar rar-rare">◆ RARE</span>
+        <span class="ach-icon">📈</span>
+        <div class="ach-name">GOOGLE BUSINESS INTELLIGENCE</div>
+        <div class="ach-desc">Professional Certificate<br>Coursera · Authorized by Google · 2025</div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="position:relative;z-index:1;"></div>
+
+<!-- ticker 5 -->
+<div class="ticker-wrap pink" style="position:relative;z-index:1;">
+  <span class="ticker-inner" style="animation-delay:-3s;">OPEN TO DS & ML ROLES ★ LOS ANGELES · OPEN TO RELOCATION ★ LET'S BUILD SOMETHING ★ AVAILABLE NOW ★ OPEN TO DS & ML ROLES ★ LOS ANGELES · OPEN TO RELOCATION ★ LET'S BUILD SOMETHING ★&nbsp;&nbsp;</span>
+</div>
+
+<!-- ═══ LEVEL 06 — CONTACT ═══ -->
+<section class="sec sec-dark" id="contact">
+  <div class="container">
+    <div class="lvl-head reveal" style="justify-content:center;flex-direction:column;align-items:center;text-align:center;">
+      <div class="lvl-num">LEVEL<br>06</div>
+      <div class="lvl-info" style="text-align:center;">
+        <div class="lvl-name">CONTACT</div>
+        <div class="lvl-sub">► GET IN TOUCH</div>
+      </div>
+    </div>
+
+    <div class="cbox reveal">
+      <div class="c-title">LET'S CONNECT</div>
+      <div class="c-desc">Open to Data Science &amp; ML Engineering roles.<br>Let's build something that actually matters.</div>
+      <div class="c-btns">
+        <a href="./Angela_Kang_DS_Resume.pdf" target="_blank" rel="noopener" class="clink email">⬇ &nbsp;DS RESUME</a>
+        <a href="./Angela_Kang_AI_Resume.pdf" target="_blank" rel="noopener" class="clink ai">⬇ &nbsp;AI RESUME</a>
+        <a href="./Angela_Kang_Transcript.pdf" target="_blank" rel="noopener" class="clink tr">⬇ &nbsp;TRANSCRIPT</a>
+        <a href="mailto:angelakang02@gmail.com" class="clink email">✉ &nbsp;EMAIL</a>
+        <a href="https://github.com/angelaykang" target="_blank" class="clink gh">⌘ &nbsp;GITHUB</a>
+        <a href="https://linkedin.com/in/angelaykang" target="_blank" class="clink li">↗ &nbsp;LINKEDIN</a>
+        <a href="tel:+17073447116" class="clink ph">☎ &nbsp;+1 (707) 344-7116</a>
+      </div>
+    </div>
+
+    <div class="continue-box reveal">
+      <div class="continue-txt">► ANGELA KANG · 2026 ◄</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="position:relative;z-index:1;">
+  <p style="color:var(--pink);margin-bottom:7px;">ANGELA KANG · DATA SCIENTIST</p>
+  <p>© 2026 &nbsp;·&nbsp; BUILT WITH ♥ + LOTS OF PYTHON</p>
+  <p style="margin-top:7px;color:var(--pur2);">github.com/angelaykang</p>
+</footer>
+
+<script>
+/* ── STARS ── */
+(function(){
+  const c = document.getElementById('stars');
+  const x = c.getContext('2d');
+  const stars = [];
+
+  function resize(){
+    c.width = window.innerWidth;
+    c.height = Math.max(document.body.scrollHeight, window.innerHeight);
+  }
+
+  function init(){
+    stars.length = 0;
+    const n = Math.floor((c.width * c.height) / 7000);
+    for(let i=0;i<n;i++){
+      stars.push({
+        x: Math.random()*c.width,
+        y: Math.random()*c.height,
+        s: Math.random()<.7 ? 1 : Math.random()<.5 ? 2 : 3,
+        a: .3+Math.random()*.7,
+        spd: .004+Math.random()*.018,
+        off: Math.random()*Math.PI*2,
+        col: Math.random()<.7?'#fff':Math.random()<.5?'#fce7f3':'#fbbf24'
+      });
+    }
+  }
+
+  let f=0;
+  function draw(){
+    x.clearRect(0,0,c.width,c.height);
+    f++;
+    stars.forEach(s=>{
+      x.globalAlpha = s.a*(0.55+0.45*Math.sin(f*s.spd+s.off));
+      x.fillStyle = s.col;
+      x.fillRect(s.x,s.y,s.s,s.s);
+    });
+    requestAnimationFrame(draw);
+  }
+
+  resize(); init(); draw();
+  window.addEventListener('resize',()=>{ resize(); init(); });
+  window.addEventListener('scroll',()=>{
+    const nh = Math.max(document.body.scrollHeight,window.innerHeight);
+    if(c.height!==nh){ c.height=nh; init(); }
+  });
+})();
+
+/* ── SCROLL REVEAL ── */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
+  });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ── XP BARS ── */
+const xpObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const w = e.target.getAttribute('data-w');
+      setTimeout(()=>{ e.target.style.width=w; },150);
+      xpObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.xpfill').forEach(b=>xpObs.observe(b));
+
+/* ── SMOOTH ANCHORS ── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+});
+</script>
+</body>
+</html>
